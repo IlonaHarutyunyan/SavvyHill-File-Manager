@@ -9,10 +9,10 @@ import { FcFolder } from "react-icons/fc";
 import { LuFileText } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 
-const FolderComponent = () => {
+const FolderComponent = ({ folders }) => {
   const navigate = useNavigate();
-  const state = useSelector((state) => state);
-  const folders = state.foldersReducer.objects;
+  // const state = useSelector((state) => state);
+  // const folders = state.foldersReducer.objects;
 
   const [contextMenu, setContextMenu] = useState(null);
 
@@ -27,12 +27,14 @@ const FolderComponent = () => {
   const handleDoubleClick = (folder) => {
     if (folder.type === "textFile") {
       navigate(`/text-editor/${folder.id}`);
+    } else if (folder.type === "folder") {
+      navigate(`/folder/${folder.id}`);
     }
   };
 
   return (
     <div onContextMenu={handleContextMenu} className="files_wrapper">
-      {folders.map((folder, index) => {
+      {folders?.map((folder, index) => {
         return (
           <div
             key={index}
