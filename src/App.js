@@ -14,19 +14,13 @@ import {
 } from "react-router-dom";
 
 function App() {
-  const { folderID } = useParams();
-  const state = useSelector((state) => state);
-  const folderComponents = state.foldersReducer.objects.find(
-    (obj) => obj.id === +folderID
-  );
-
   return (
     <div className="App">
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/text-editor/:fileID" element={<TextEditor />} />
-          <Route path="/folder/:folderID" element={<FolderComponent folders={folderComponents?.files}/>} />
+          <Route path="/folder/:folderID" element={<FolderComponent/>} />
         </Routes>
       </Router>
     </div>

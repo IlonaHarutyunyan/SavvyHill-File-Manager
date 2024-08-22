@@ -5,7 +5,6 @@ const initialState = {
 export const FoldersSlice = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_OBJECT":
-      console.log(action.objectInfo);
       return {
         ...state,
         objects: [...state.objects, action.objectInfo],
@@ -14,6 +13,11 @@ export const FoldersSlice = (state = initialState, action) => {
       return {
         ...state,
         objects: action.updatedObjectsInfo,
+      };
+    case "UPDATE_FOLDER_FILES":
+      return {
+        ...state,
+        objects: action.updatedFolderFiles,
       };
     default:
       return state;
@@ -31,5 +35,12 @@ export const updateFileContent = (updatedObjectsInfo) => {
   return {
     type: "UPDATE_FILE_CONTENT",
     updatedObjectsInfo,
+  };
+};
+
+export const addObjectToFolder = (updatedFolderFiles) => {
+  return {
+    type: "UPDATE_FOLDER_FILES",
+    updatedFolderFiles,
   };
 };

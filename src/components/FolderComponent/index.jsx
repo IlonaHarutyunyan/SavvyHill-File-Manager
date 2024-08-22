@@ -7,13 +7,14 @@ import { ActionModal } from "../ActionModal";
 //icons
 import { FcFolder } from "react-icons/fc";
 import { LuFileText } from "react-icons/lu";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const FolderComponent = ({ folders }) => {
+const FolderComponent = () => {
   const navigate = useNavigate();
-  // const state = useSelector((state) => state);
-  // const folders = state.foldersReducer.objects;
+  const { folderID } = useParams();
+  const folders = useSelector((state) => state.foldersReducer.objects);
 
+  const folderComponents = folders.find((obj) => obj.id === folderID);
   const [contextMenu, setContextMenu] = useState(null);
 
   const handleContextMenu = (event) => {
@@ -32,9 +33,12 @@ const FolderComponent = ({ folders }) => {
     }
   };
 
+  const foldersObject =
+    folderID !== undefined ? folderComponents?.files : folders;
+
   return (
     <div onContextMenu={handleContextMenu} className="files_wrapper">
-      {folders?.map((folder, index) => {
+      {foldersObject?.map((folder, index) => {
         return (
           <div
             key={index}

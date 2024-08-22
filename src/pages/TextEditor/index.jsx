@@ -9,13 +9,15 @@ import "./styles.scss";
 export const TextEditor = () => {
   const { fileID } = useParams();
   const dispatch = useDispatch();
-  const state = useSelector((state) => state);
-  const objects = state.foldersReducer.objects;
-  const file = objects?.find((obj) => obj.id === +fileID);
+  const objects = useSelector((state) => state).foldersReducer.objects;
+  const file = objects?.find((obj) => obj.id === fileID);
+
+  console.log(objects.flatMap(item => item.files))
+
   const handleContentChange = (e) => {
     const updatedObjectsInfo = [...objects];
 
-    updatedObjectsInfo[+fileID] = {
+    updatedObjectsInfo[fileID] = {
       ...updatedObjectsInfo[+fileID],
       content: e.target.value,
     };
@@ -31,7 +33,6 @@ export const TextEditor = () => {
         className="text-editor"
         placeholder="Write your text here..."
       />
-      {/* <button onClick={handleCloseTextFile}>Close</button> */}
     </div>
   );
 };
