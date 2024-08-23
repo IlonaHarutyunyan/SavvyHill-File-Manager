@@ -58,6 +58,7 @@ export const ActionModal = ({ xCoordinates, yCoordinates, setContextMenu }) => {
               {
                 ...fileObject,
                 name: `New Folder ${(folder.files.length || 0) + 1}.txt`,
+                id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
               },
             ],
           }
