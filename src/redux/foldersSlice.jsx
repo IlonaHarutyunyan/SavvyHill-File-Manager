@@ -9,11 +9,20 @@ export const FoldersSlice = (state = initialState, action) => {
         ...state,
         objects: [...state.objects, action.objectInfo],
       };
-    case "UPDATE_FILE_CONTENT":
-      return {
-        ...state,
-        objects: action.updatedObjectsInfo,
-      };
+      case "UPDATE_FILE_CONTENT":
+        return {
+          ...state,
+          objects: state.objects.map((folder) => ({
+            ...folder,
+            files: Array.isArray(folder.files)
+              ? folder.files.map((file) =>
+                  file.id === action.payload.fileID
+                    ? { ...file, content: action.payload.content }
+                    : file
+                )
+              : folder.files, 
+          })),
+        };
     case "UPDATE_FOLDER_FILES":
       return {
         ...state,
@@ -24,20 +33,19 @@ export const FoldersSlice = (state = initialState, action) => {
   }
 };
 
-export const addObject = (objectInfo) => {
+export const addObject = (objectInfo) => {  
   return {
     type: "ADD_OBJECT",
     objectInfo,
   };
 };
 
-export const updateFileContent = (updatedObjectsInfo) => {
+export const updateFileContent = (fileID, content) => {
   return {
     type: "UPDATE_FILE_CONTENT",
-    updatedObjectsInfo,
+    payload: { fileID, content },
   };
 };
-
 export const addObjectToFolder = (updatedFolderFiles) => {
   return {
     type: "UPDATE_FOLDER_FILES",
