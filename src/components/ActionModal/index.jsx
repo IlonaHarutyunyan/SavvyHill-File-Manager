@@ -16,57 +16,126 @@ export const ActionModal = ({ xCoordinates, yCoordinates, setContextMenu }) => {
   const modalRef = useRef(null);
 
   const handleUpdateFolderFiles = (e) => {
-    const folderObject = folders.find((folder) => folder.id === folderID);
+    console.log(folderID);
 
-    if (!folderObject) {
-      console.error("Folder not found!");
-      return;
-    }
-
-    const updatedObjectsInfo = folders.map((folder) =>
-      folder.id === folderID
-        ? {
+    // Recursive function to find the folder by id and add a new file
+    const addFileToFolder = (folders, folderID) => {
+      return folders.map((folder) => {
+        if (folder.id === folderID) {
+          return {
             ...folder,
             files: [
               ...folder.files,
               {
                 ...folderObject,
-                name: `New Folder ${(folder.files.length || 0) + 1}`,
+                name: `New File ${(folder.files.length || 0) + 1}`,
+                id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
               },
             ],
-          }
-        : folder
-    );
+          };
+        } else if (folder.type === "folder" && folder.files) {
+          // Recursively add the file if the folder is nested
+          return {
+            ...folder,
+            files: addFileToFolder(folder.files, folderID),
+          };
+        }
+        return folder;
+      });
+    };
+
+    const updatedObjectsInfo = addFileToFolder(folders, folderID);
 
     dispatch(addObjectToFolder(updatedObjectsInfo));
   };
 
+  // const handleUpdateFolderFiles = (e) => {
+  //   console.log(folderID)
+  //   const folderObject = folders.find((folder) => folder.id === folderID);
+
+  //   if (!folderObject) {
+  //     console.error("Folder not found!");
+  //     return;
+  //   }
+
+  //   const updatedObjectsInfo = folders.map((folder) =>
+  //     folder.id === folderID
+  //       ? {
+  //           ...folder,
+  //           files: [
+  //             ...folder.files,
+  //             {
+  //               ...folderObject,
+  //               name: `New Folder ${(folder.files.length || 0) + 1}`,
+  //               id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+  //             },
+  //           ],
+  //         }
+  //       : folder
+  //   );
+
+  //   dispatch(addObjectToFolder(updatedObjectsInfo));
+  // };
+
+  // const handleUpdateFolderTextFiles = (e) => {
+  //   const folderObject = folders.find((folder) => folder.id === folderID);
+
+  //   if (!folderObject) {
+  //     console.error("Folder not found!");
+  //     return;
+  //   }
+
+  //   const updatedObjectsInfo = folders.map((folder) =>
+  //     folder.id === folderID
+  //       ? {
+  //           ...folder,
+  //           files: [
+  //             ...folder.files,
+  //             {
+  //               ...fileObject,
+  //               name: `New Folder ${(folder.files.length || 0) + 1}.txt`,
+  //               id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+  //             },
+  //           ],
+  //         }
+  //       : folder
+  //   );
+
+  //   dispatch(addObjectToFolder(updatedObjectsInfo));
+  // };
+
   const handleUpdateFolderTextFiles = (e) => {
-    const folderObject = folders.find((folder) => folder.id === folderID);
-
-    if (!folderObject) {
-      console.error("Folder not found!");
-      return;
-    }
-
-    const updatedObjectsInfo = folders.map((folder) =>
-      folder.id === folderID
-        ? {
+    // Recursive function to find the folder by id and add a new text file
+    const addTextFileToFolder = (folders, folderID) => {
+      return folders.map((folder) => {
+        if (folder.id === folderID) {
+          return {
             ...folder,
             files: [
               ...folder.files,
               {
                 ...fileObject,
-                name: `New Folder ${(folder.files.length || 0) + 1}.txt`,
+                name: `New File ${(folder.files.length || 0) + 1}.txt`,
                 id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
               },
             ],
-          }
-        : folder
-    );
+          };
+        } else if (folder.type === "folder" && folder.files) {
+          // Recursively add the text file if the folder is nested
+          return {
+            ...folder,
+            files: addTextFileToFolder(folder.files, folderID),
+          };
+        }
+        return folder;
+      });
+    };
+
+    const updatedObjectsInfo = addTextFileToFolder(folders, folderID);
 
     dispatch(addObjectToFolder(updatedObjectsInfo));
   };
+
   const handleCreateFolder = () => {
     folderID !== undefined
       ? handleUpdateFolderFiles()

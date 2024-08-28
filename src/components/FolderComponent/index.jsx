@@ -39,6 +39,7 @@ const FolderComponent = () => {
   };
 
   const handleDoubleClick = (folder) => {
+    console.log(folder)
     if (folder.type === "textFile") {
       navigate(`/text-editor/${folder.id}`);
     } else if (folder.type === "folder") {
