@@ -12,7 +12,6 @@ export const FoldersSlice = (state = initialState, action) => {
 
     case "UPDATE_FILE_CONTENT":
       const updateFileContentInObject = (obj, fileID, content) => {
-        console.log(obj.id);
         if (obj.id === fileID) {
           return { ...obj, content: content };
         }
@@ -52,6 +51,7 @@ export const FoldersSlice = (state = initialState, action) => {
 
         return obj;
       };
+
       return {
         ...state,
         objects: state.objects.map((obj) =>
@@ -64,6 +64,7 @@ export const FoldersSlice = (state = initialState, action) => {
         if (obj.id === fileID) {
           return null;
         }
+
         if (obj.type === "folder" && obj.files && obj.files.length > 0) {
           const updatedFiles = obj.files
             .map((file) => deleteFileInObject(file, fileID))
@@ -74,6 +75,7 @@ export const FoldersSlice = (state = initialState, action) => {
             files: updatedFiles,
           };
         }
+
         return obj;
       };
 
@@ -89,6 +91,7 @@ export const FoldersSlice = (state = initialState, action) => {
         if (obj.id === fileID) {
           return { ...obj, status: newStatus };
         }
+
         if (obj.type === "folder" && obj.files && obj.files.length > 0) {
           return {
             ...obj,
@@ -97,6 +100,7 @@ export const FoldersSlice = (state = initialState, action) => {
             ),
           };
         }
+
         return obj;
       };
 
@@ -108,12 +112,11 @@ export const FoldersSlice = (state = initialState, action) => {
       };
 
     case "UPDATE_FOLDER_FILES":
-      console.log(action);
-
       return {
         ...state,
         objects: action.updatedFolderFiles,
       };
+
     default:
       return state;
   }

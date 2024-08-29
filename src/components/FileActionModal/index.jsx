@@ -1,7 +1,8 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 //styles
 import "./styles.scss";
-import { useDispatch } from "react-redux";
+//redux
 import { deleteFile, updateFileStatus } from "../../redux/foldersSlice";
 
 export const FileActionModal = ({
@@ -12,6 +13,7 @@ export const FileActionModal = ({
   setRenameInputValue,
 }) => {
   const dispatch = useDispatch();
+  
   const style = {
     top: yCoordinates,
     left: xCoordinates,
@@ -21,8 +23,8 @@ export const FileActionModal = ({
   const handleAction = (action, file) => {
     switch (action) {
       case "rename": {
-        setRenameInputValue(file.name)
-        dispatch(updateFileStatus(file.id, "rename"))
+        setRenameInputValue(file.name);
+        dispatch(updateFileStatus(file.id, "rename"));
         break;
       }
       case "delete": {
@@ -30,11 +32,11 @@ export const FileActionModal = ({
         break;
       }
       default:
-        break; 
+        break;
     }
     setFileContextMenu(null);
   };
-;
+
   return (
     <div className="file-action-modal" style={style}>
       <ul>

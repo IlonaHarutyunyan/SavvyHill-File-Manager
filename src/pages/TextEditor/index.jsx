@@ -1,8 +1,7 @@
-//redux
-import { useDispatch, useSelector } from "react-redux";
-import { updateFileContent } from "../../redux/foldersSlice";
-//router
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+//redux
+import { updateFileContent } from "../../redux/foldersSlice";
 //styles
 import "./styles.scss";
 

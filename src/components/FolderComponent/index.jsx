@@ -1,23 +1,22 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { renameFile, updateFileStatus } from "../../redux/foldersSlice";
 //styles
 import "./styles.scss";
 //components
 import { ActionModal } from "../ActionModal";
+import { FileActionModal } from "../FileActionModal";
 //icons
 import { FcFolder } from "react-icons/fc";
 import { LuFileText } from "react-icons/lu";
-import { useNavigate, useParams } from "react-router-dom";
-import { FileActionModal } from "../FileActionModal";
-import { renameFile, updateFileStatus } from "../../redux/foldersSlice";
 
 const FolderComponent = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { folderID } = useParams();
   const folders = useSelector((state) => state.foldersReducer.objects);
 
-  const folderComponents = folders.find((obj) => obj.id === folderID);
   const [contextMenu, setContextMenu] = useState(null);
   const [fileContextMenu, setFileContextMenu] = useState(null);
   const [renameInputValue, setRenameInputValue] = useState("");
@@ -39,7 +38,6 @@ const FolderComponent = () => {
   };
 
   const handleDoubleClick = (folder) => {
-    console.log(folder)
     if (folder.type === "textFile") {
       navigate(`/text-editor/${folder.id}`);
     } else if (folder.type === "folder") {
@@ -50,9 +48,26 @@ const FolderComponent = () => {
   const handleInputKeyDown = (e, folder) => {
     if (e.key === "Enter") {
       dispatch(renameFile(folder.id, renameInputValue));
-      dispatch(updateFileStatus(folder.id, "default"))
+      dispatch(updateFileStatus(folder.id, "default"));
     }
   };
+
+  const findById = (items, id) => {
+    for (const item of items) {
+      if (item.id === id) {
+        return item;
+      }
+      if (item.type === "folder" && item.files.length > 0) {
+        const found = findById(item.files, id);
+        if (found) {
+          return found;
+        }
+      }
+    }
+    return null;
+  };
+
+  const folderComponents = findById(folders, folderID);
 
   const foldersObject =
     folderID !== undefined ? folderComponents?.files : folders;
