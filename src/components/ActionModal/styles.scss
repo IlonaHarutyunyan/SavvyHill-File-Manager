@@ -1,0 +1,14 @@
+.create_modal_wrapper {
+  position: absolute;
+  background-color: #e3e3e3;
+  border: "1px solid #ccc";
+  z-index: 1000;
+  .action_button {
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+  }
+  .action_button:hover {
+    background-color: #d1d1d1;
+    cursor: pointer;
+  }
+}

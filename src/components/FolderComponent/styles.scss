@@ -1,0 +1,33 @@
+.files_wrapper {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  .folder {
+    padding: 20px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    .icon-wrapper {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 90px;
+      height: 85px;
+    }
+
+    .icon-wrapper svg {
+      width: 100%;
+      height: 100%;
+    }
+    svg {
+      width: 40px;
+    }
+  }
+}
