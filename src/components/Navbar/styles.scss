@@ -1,0 +1,11 @@
+.navbar_wrapper {
+  width: 100%;
+  display: flex;
+  padding: 20px;
+  background-color: #e3e3e3;
+  .back_button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+}

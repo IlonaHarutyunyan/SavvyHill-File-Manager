@@ -7,11 +7,13 @@ import FolderComponent from "./components/FolderComponent";
 //pages
 import { Home } from "./pages/Home";
 import { TextEditor } from "./pages/TextEditor";
+import { Navbar } from "./components/Navbar";
 
 function App() {
   return (
     <div className="App">
       <Router>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/text-editor/:fileID" element={<TextEditor />} />
@@ -19,7 +21,7 @@ function App() {
         </Routes>
       </Router>
     </div>
-  );  
+  );
 }
 
 export default App;

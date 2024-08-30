@@ -125,8 +125,8 @@ export const ActionModal = ({ xCoordinates, yCoordinates, setContextMenu }) => {
       }}
       ref={modalRef}
     >
-      <div onClick={handleCreateFolder}>Create New Folder</div>
-      <div onClick={handleCreateTextFile}>Create Text File</div>
+      <div onClick={handleCreateFolder} className="action_button">Create New Folder</div>
+      <div onClick={handleCreateTextFile} className="action_button">Create Text File</div>
     </div>
   );
 };
